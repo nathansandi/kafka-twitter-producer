@@ -1,7 +1,7 @@
 package com.twitter.producer.config
 
 import com.twitter.producer.constants.*
-import com.twitter.producer.kafka.KafkaAvroMessageProducer
+import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringSerializer
@@ -11,7 +11,7 @@ import java.util.*
 @Component
 class KafkaProducerConfig {
     companion object {
-        fun createKafkaProducer(): KafkaProducer<String, String> {
+        fun createKafkaProducer(): KafkaProducer<String, GenericRecord> {
             // Create producer properties
             val prop = Properties()
             prop.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAPSERVERS)
@@ -35,7 +35,7 @@ class KafkaProducerConfig {
             prop.setProperty("schema.registry.url", SCHEMA_REGISTRY_SERVER_URL)
 
             // Create producer
-            return KafkaProducer<String, String>(prop)
+            return KafkaProducer<String, GenericRecord>(prop)
         }
     }
 }
